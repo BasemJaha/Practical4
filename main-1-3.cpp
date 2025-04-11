@@ -1,26 +1,38 @@
-// main-1-3.cpp
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "Car.h"
 #include "Bus.h"
 #include "Motorbike.h"
 #include "ParkingLot.h"
 
+using namespace std;
+
 int main() {
     ParkingLot lot(10);
-    int id = 1;
 
-    for (int i = 0; i < 5; ++i)
-        lot.parkVehicle(new Car(id++));
-    for (int i = 0; i < 3; ++i)
-        lot.parkVehicle(new Bus(id++));
-    for (int i = 0; i < 2; ++i)
-        lot.parkVehicle(new Motorbike(id++));
+    // Park 5 Cars
+    for (int i = 0; i < 5; ++i) {
+        lot.parkVehicle(new Car(i + 1));
+    }
 
-    std::cout << "Waiting 20 seconds...\n";
-    std::this_thread::sleep_for(std::chrono::seconds(20));
+    // Park 3 Buses
+    for (int i = 5; i < 8; ++i) {
+        lot.parkVehicle(new Bus(i + 1));
+    }
 
-    int overstaying = lot.countOverstayingVehicles(15);
-    std::cout << "Vehicles overstaying more than 15 seconds: " << overstaying << std::endl;
+    // Park 2 Motorbikes
+    for (int i = 8; i < 10; ++i) {
+        lot.parkVehicle(new Motorbike(i + 1));
+    }
+
+    // Simulate waiting (e.g., 16 seconds)
+    cout << "Waiting for 16 seconds...\n";
+    std::this_thread::sleep_for(std::chrono::seconds(16));
+
+    // Count overstaying vehicles (over 15 seconds)
+    int overstayers = lot.countOverstayingVehicles(15);
+    cout << "Number of overstaying vehicles: " << overstayers << endl;
 
     return 0;
 }
