@@ -1,20 +1,36 @@
 #include <iostream>
+#include <vector>
 #include "Car.h"
 #include "Bus.h"
 #include "Motorbike.h"
 
+using namespace std;
+
 int main() {
-    const int SIZE = 3;
-    Vehicle* vehicles[SIZE];
+    int num;
+    cout << "How many vehicles do you want to park? ";
+    cin >> num;
 
-    vehicles[0] = new Car(1);
-    vehicles[1] = new Bus(2);
-    vehicles[2] = new Motorbike(3);
+    vector<Vehicle*> parkingLot;
 
-    std::cout << "Vehicle Parking Durations:\n";
-    for (int i = 0; i < SIZE; ++i) {
-        std::cout << "Vehicle ID " << vehicles[i]->getID() << " duration: " << vehicles[i]->getParkingDuration() << " seconds" << std::endl;
-        delete vehicles[i];
+    for (int i = 0; i < num; ++i) {
+        cout << "Enter vehicle type (1=Car, 2=Bus, 3=Motorbike): ";
+        int type;
+        cin >> type;
+        int id;
+        cout << "Enter vehicle ID: ";
+        cin >> id;
+
+        if (type == 1) parkingLot.push_back(new Car(id));
+        else if (type == 2) parkingLot.push_back(new Bus(id));
+        else if (type == 3) parkingLot.push_back(new Motorbike(id));
+        else cout << "Invalid type. Skipping.\n";
+    }
+
+    cout << "\nParking durations:\n";
+    for (Vehicle* v : parkingLot) {
+        cout << "Vehicle ID " << v->getID() << ": " << v->getParkingDuration() << " seconds\n";
+        delete v;
     }
 
     return 0;

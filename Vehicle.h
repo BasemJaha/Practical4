@@ -1,4 +1,3 @@
-// Vehicle.h
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
@@ -13,7 +12,7 @@ protected:
 public:
     Vehicle(int id);
     int getID() const;
-    virtual int getParkingDuration() const = 0;
+    virtual int getParkingDuration() const = 0; // Pure virtual function
     virtual ~Vehicle() {}
 };
 
