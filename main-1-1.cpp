@@ -1,49 +1,21 @@
 #include <iostream>
-#include "Vehicle.h"
-
-using namespace std;
+#include "Car.h"
+#include "Bus.h"
+#include "Motorbike.h"
 
 int main() {
-    int numVehicles;
-    cout << "Enter the number of vehicles to park: ";
-    cin >> numVehicles;
+    const int SIZE = 3;
+    Vehicle* vehicles[SIZE];
 
-    Vehicle** parkingLot = new Vehicle*[numVehicles];
+    vehicles[0] = new Car(1);
+    vehicles[1] = new Bus(2);
+    vehicles[2] = new Motorbike(3);
 
-    for (int i = 0; i < numVehicles; i++) {
-        int id;
-        string type;
-        cout << "Enter vehicle type (Car, Bus, Motorbike): ";
-        cin >> type;
-        cout << "Enter vehicle ID: ";
-        cin >> id;
-
-        if (type == "Car")
-            parkingLot[i] = new Car(id);
-        else if (type == "Bus")
-            parkingLot[i] = new Bus(id);
-        else if (type == "Motorbike")
-            parkingLot[i] = new Motorbike(id);
-        else {
-            cout << "Invalid type. Skipping this vehicle.\n";
-            parkingLot[i] = nullptr;
-        }
+    std::cout << "Vehicle Parking Durations:\n";
+    for (int i = 0; i < SIZE; ++i) {
+        std::cout << "Vehicle ID " << vehicles[i]->getID() << " duration: " << vehicles[i]->getParkingDuration() << " seconds" << std::endl;
+        delete vehicles[i];
     }
-
-    cout << "\n--- Parking Durations ---\n";
-    for (int i = 0; i < numVehicles; i++) {
-        if (parkingLot[i] != nullptr) {
-            cout << "Vehicle ID " << parkingLot[i]->getID()
-                 << " parked for " << parkingLot[i]->getParkingDuration()
-                 << " seconds.\n";
-        }
-    }
-
-    // Cleanup
-    for (int i = 0; i < numVehicles; i++) {
-        delete parkingLot[i];
-    }
-    delete[] parkingLot;
 
     return 0;
 }
